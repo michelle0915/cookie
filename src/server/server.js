@@ -90,8 +90,6 @@ watcher
     } else {
       logger.error(`failed to query`)
     }
-
-    */
   })
 
 const createQueryCsv = async (csv_path, img_path) => {
