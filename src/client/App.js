@@ -62,7 +62,7 @@ class App extends Component {
 
     this.setSelected = this.setSelected.bind(this)
     axios.get('http://192.168.0.22:3000/list/all')
-      .then(res => this.setState({ alldata: res }))
+      .then(res => this.setState({ alldata: res.data }))
       .catch(err => console.log(err))
   }
 
