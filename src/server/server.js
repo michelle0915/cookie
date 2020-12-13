@@ -34,7 +34,7 @@ app.get('/test', (req, res) => {
 })
 
 app.get('*', (req, res) => {
-  res.sendFile(Path.join(__dirname, '../dist', 'index.html'))
+  res.sendFile(Path.join(__dirname, '../../dist', 'index.html'))
 })
 
 app.listen(serverConfig.port, () => {

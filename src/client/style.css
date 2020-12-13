@@ -1,0 +1,36 @@
+#container {
+  display: flex;
+}
+
+#list {
+  margin: 0 50px;
+  padding: 0;
+  width: 800px;
+  height: 800px;
+  border: solid 2px #ddd;
+  list-style: none;
+  overflow-y: scroll;
+}
+
+#list li {
+  padding: 10px;
+  border: solid 2px #ddd;
+}
+#list li:hover {
+  background: #ddd;
+  cursor: pointer;
+}
+
+#list li span {
+  display: inline-block;
+  width: 250px;
+}
+
+#detail {
+  font-size: 20px;
+}
+
+#detail img {
+  width: 500px;
+  height: 500px;
+}
