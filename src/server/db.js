@@ -9,7 +9,11 @@ const RecordSchema = new Schema({
   update_time: Number,
 })
 
-mongoose.connect('mongodb://localhost/cookie')
+mongoose.connect('mongodb://localhost/cookie', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+  }
+)
 const Record = mongoose.model('Record', RecordSchema)
 
 const insert = (queryId, path) => {
@@ -24,7 +28,7 @@ const insert = (queryId, path) => {
 }
 
 const update = (queryId, result) => {
-  Record.update(
+  Record.updateOne(
     { query_id: queryId },
     { $set: { result: result, update_time: Date.now() }},
     (err) => { if (err) logger.error(`failed to save on DB: ${err}`)}
