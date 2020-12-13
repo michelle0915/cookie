@@ -59,30 +59,34 @@ watcher
       neoApi.queryUrl,
       { "model_id": neoApi.modelId, "model_iter": neoApi.modelIter, "csv": csv_path }
     )
-    const queryId = resQuery.query_id
+    const queryId = resQuery.data.query_id
+    logger.info(`successfully send query. query_id: ${queryId}`)
 
     // save DB
     db.insert(queryId, Path.join('images', Path.basename(img_path)))
 
     // Polling NeoPulse Results
+    let resResults = null
     do {
       await wait(1000)
 
-      const resResults = await axios.post(
+      resResults = await axios.post(
         neoApi.resultsUrl,
         { "query_id": queryId, }
       )
-    } while (resResults.status == 'QUERYING' || resResults.status == 'WAITING_TO_QUERY')
+    } while (resResults.data.status == 'QUERYING' || resResults.data.status == 'WAITING_TO_QUERY')
 
     // NeoPulse Results
-    if (resResults.status == 'QUERY_COMPLETED') {
-      const resResults = await axios.post(
+    if (resResults.data.status == 'QUERY_COMPLETED') {
+      resResults = await axios.post(
         neoApi.resultsUrl,
         { "query_id": queryId, "show": true }
       )
 
+      logger.info(`successfully get result. result: ${resResults.data.results}`)
       // update DB
-      db.update(queryId, resResults.results)
+      db.update(queryId, resResults.data.results)
+
     } else {
       logger.error(`failed to query`)
     }
