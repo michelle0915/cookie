@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 
 class App extends Component {
     render() {
-        return <div>This is the Demo</div>;
+        return (
+          <h1>NeoPulse Anomaly Detection Demo</h1>
+        );
     }
 }
 

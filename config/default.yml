@@ -5,9 +5,11 @@ path:
   publicImages: "public/images"
   query: "/tmp"
 
-url:
-  query: 'http://localhost:46921/api/ai/query'
-  results: 'http://localhost:46921/api/ai/results'
+neopulseApi:
+  queryUrl: 'http://localhost:46921/api/ai/query'
+  resultsUrl: 'http://localhost:46921/api/ai/results'
+  modelId: 'cookie_0'
+  modelIter: '1'
 
 log:
   appenders:

@@ -13,7 +13,7 @@ import db from './db'
 const app = express()
 const serverConfig = config.get('server')
 const pathConfig = config.get('path')
-const URL = config.get('url')
+const neoApi = config.get('neopulseApi')
 
 app.use(express.static(Path.join('./', 'dist')))
 app.use(express.static(Path.join('./', 'public')))
@@ -22,21 +22,15 @@ app.use(express.urlencoded({ extended: true }))
 
 // routing
 app.get('/list/all', (req, res) => {
-  db.find((results) => {
-    res.send(results)
-  })
+  db.find((results) => { res.send(results) })
 })
 
 app.get('/list/update', (req, res) => {
-  db.find((results) => {
-    res.send(results)
-  }, req.lastUpdateTime)
+  db.find((results) => { res.send(results) }, req.lastUpdateTime)
 })
 
 app.get('/test', (req, res) => {
-  db.find((results) => {
-    res.send(results)
-  })
+  db.find((results) => { res.send(results) })
 })
 
 app.get('*', (req, res) => {
@@ -62,8 +56,8 @@ watcher
 
     // NeoPulse Query
     const resQuery = await axios.post(
-      URL.query,
-      { "model_id": '', "model_iter": '', "csv": csv_path }
+      neoApi.queryUrl,
+      { "model_id": , "model_iter": '', "csv": csv_path }
     )
     const queryId = resQuery.query_id
 
@@ -73,16 +67,16 @@ watcher
     // Polling NeoPulse Results
     do {
       const resResults = await axios.post(
-        URL.results,
-        { "query_id": resQuery.query_id, }
+        neoApi.resultsUrl,
+        { "query_id": queryId, }
       )
     } while (resResults.status == 'QUERYING' || resResults.status == 'WAITING_TO_QUERY')
 
     // NeoPulse Results
     if (resResults.status == 'QUERY_COMPLETED') {
       const resResults = await axios.post(
-        URL.results,
-        { "query_id": resQuery.query_id, "show": true }
+        neoApi.resultsUrl,
+        { "query_id": queryId, "show": true }
       )
 
       // update DB
