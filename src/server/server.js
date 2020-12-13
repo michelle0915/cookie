@@ -57,7 +57,7 @@ watcher
     // NeoPulse Query
     const resQuery = await axios.post(
       neoApi.queryUrl,
-      { "model_id": , "model_iter": '', "csv": csv_path }
+      { "model_id": neoApi.modelId, "model_iter": neoApi.modelIter, "csv": csv_path }
     )
     const queryId = resQuery.query_id
 
@@ -66,6 +66,8 @@ watcher
 
     // Polling NeoPulse Results
     do {
+      await wait(1000)
+
       const resResults = await axios.post(
         neoApi.resultsUrl,
         { "query_id": queryId, }
@@ -93,3 +95,5 @@ const createQueryCsv = async (csv_path, img_path) => {
     logger.error(`failed to save csv file: ${e}`)
   }
 }
+
+const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
