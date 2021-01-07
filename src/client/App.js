@@ -33,7 +33,7 @@ function Detail(props) {
   if (data.result) {
     result = data.result[0].substr(0, data.result[0].length) //trim \n
     result = result.split(',').map(num => Number(num).toFixed(2))
-    result = <span>正常:{result[0]} / 異常（ヒビ）:{result[1]} / 異常（欠け）:{result[2]}</span>
+    result = <span>正常:{result[0]} / 異常:{result[1]}</span>
   } else {
     result = <span>処理待ち</span>
   }
@@ -61,7 +61,7 @@ class App extends Component {
     }
 
     this.setSelected = this.setSelected.bind(this)
-    axios.get('http://192.168.0.22:3000/list/all')
+    axios.get('/list/all')
       .then(res => this.setState({ alldata: res.data }))
       .catch(err => console.log(err))
   }

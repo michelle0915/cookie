@@ -4,7 +4,7 @@ import config from 'config'
 
 const pathConfig = config.get('path')
 const trim_size = 300
-const small_size = 64
+//const small_size = 64
 
 const convertImage = (img_path) => {
 
@@ -30,7 +30,8 @@ const convertImage = (img_path) => {
         .toFile(Path.join(pathConfig.publicImages, basename), (err, info) => {
           if (err) { throw err }
         })
-      const promise2 = img.resize(small_size, small_size)
+//      const promise2 = img.resize(small_size, small_size)
+      const promise2 = img
         .toFile(Path.join(pathConfig.query, basename), (err, info) => {
           if (err) { throw err }
         })
