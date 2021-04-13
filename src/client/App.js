@@ -61,6 +61,15 @@ class App extends Component {
     }
 
     this.setSelected = this.setSelected.bind(this)
+    this.fetchData = this.fetchData.bind(this)
+
+    this.fetchData()
+
+    setInterval(this.fetchData, 1000)
+  }
+
+  fetchData() {
+    console.log('fetch data...')
     axios.get('/list/all')
       .then(res => this.setState({ alldata: res.data }))
       .catch(err => console.log(err))
